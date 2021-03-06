@@ -1,0 +1,10 @@
+## Interface: 30300
+## Author: Kesava (Kader Backport)
+## Title: |cff9900ffKui|r Nameplates (|c00ffffffWoTLK|r)
+## Notes: Prettier, lightweight, configurable nameplates.
+## SavedVariablesPerCharacter: KuiNameplatesDB
+
+embeds.xml
+core.lua
+config.lua
+layout.lua
