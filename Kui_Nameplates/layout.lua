@@ -40,6 +40,11 @@ local warningEvents = {
 --local fixaa = true
 local origSizes, origFontSizes, sizes, fontSizes = {}, {}, {}, {}
 
+-- support for some clients
+local font = kui.m.f.yanone
+local otherLocales = {koKR = true, zhCN = true, zhTW = true}
+if otherLocales[GetLocale()] then font = NAMEPLATE_FONT end
+
 --------------------------------------------------------------------- globals --
 local strsplit, pairs, ipairs, unpack = strsplit, pairs, ipairs, unpack
 
@@ -177,7 +182,7 @@ local function ComboPointsUpdate(self)
         local blue = (1 - (1 / 5) * self.points)
 
         self:SetText(self.points)
-        self:SetFont(kui.m.f.yanone, size, "OUTLINE")
+        self:SetFont(font, size, "OUTLINE")
         self:SetTextColor(1, 1, blue)
     elseif self:GetText() then
         self:SetText("")
@@ -777,7 +782,7 @@ function ns.f:InitFrame(frame)
 
     -- health text -------------------------------------------------------------
     frame.health.p = kui.CreateFontString(frame.overlay, {
-        font = kui.m.f.yanone,
+        font = font,
         size = fontSizes.large,
         outline = "OUTLINE"
     })
@@ -787,7 +792,7 @@ function ns.f:InitFrame(frame)
 
     if profile.hp.showalt then
         frame.health.mo = kui.CreateFontString(frame.overlay, {
-            font = kui.m.f.yanone,
+            font = font,
             size = fontSizes.small,
             outline = "OUTLINE"
         })
@@ -800,7 +805,7 @@ function ns.f:InitFrame(frame)
     -- level text --------------------------------------------------------------
     frame.level = kui.CreateFontString(frame.level, {
         reset = true,
-        font = kui.m.f.yanone,
+        font = font,
         size = fontSizes.name,
         outline = "OUTLINE"
     })
@@ -811,7 +816,7 @@ function ns.f:InitFrame(frame)
 
     -- name text ---------------------------------------------------------------
     frame.name = kui.CreateFontString(frame.overlay, {
-        font = kui.m.f.yanone,
+        font = font,
         size = fontSizes.name,
         outline = "OUTLINE"
     })
@@ -824,7 +829,7 @@ function ns.f:InitFrame(frame)
 
     -- combo point text --------------------------------------------------------
     if profile.general.combopoints then
-        frame.cp = kui.CreateFontString(frame.health, {font = kui.m.f.yanone, size = fontSizes.combopoints, outline = "OUTLINE", shadow = true})
+        frame.cp = kui.CreateFontString(frame.health, {font = font, size = fontSizes.combopoints, outline = "OUTLINE", shadow = true})
         frame.cp:SetPoint("LEFT", frame.health, "RIGHT", 5, 1)
 
         frame.cp.Update = ComboPointsUpdate
@@ -878,7 +883,7 @@ function ns.f:InitFrame(frame)
         -- cast bar text -------------------------------------------------------
         if profile.castbar.spellname then
             frame.castbar.name = kui.CreateFontString(frame.castbar, {
-                font = kui.m.f.yanone,
+                font = font,
                 size = fontSizes.name,
                 outline = "OUTLINE"
             })
@@ -887,14 +892,14 @@ function ns.f:InitFrame(frame)
 
         if profile.castbar.casttime then
             frame.castbar.max = kui.CreateFontString(frame.castbar, {
-                font = kui.m.f.yanone,
+                font = font,
                 size = fontSizes.name,
                 outline = "OUTLINE"
             })
             frame.castbar.max:SetPoint("TOPRIGHT", frame.castbar, "BOTTOMRIGHT", -2, -1)
 
             frame.castbar.curr = kui.CreateFontString(frame.castbar, {
-                font = kui.m.f.yanone,
+                font = font,
                 size = fontSizes.small,
                 outline = "OUTLINE"
             })
@@ -942,7 +947,7 @@ function ns.f:InitFrame(frame)
     if profile.castbar.warnings then
         -- casting spell name
         frame.castWarning = kui.CreateFontString(frame.overlay, {
-            font = kui.m.f.yanone,
+            font = font,
             size = fontSizes.spellname,
             outline = "OUTLINE"
         })
@@ -961,7 +966,7 @@ function ns.f:InitFrame(frame)
 
         -- incoming healing
         frame.incWarning = kui.CreateFontString(frame.overlay, {
-            font = kui.m.f.yanone,
+            font = font,
             size = fontSizes.small,
             outline = "OUTLINE"
         })

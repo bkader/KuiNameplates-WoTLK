@@ -8,7 +8,7 @@ local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 do
     local handler = {}
     local options = {
-        name = "Kui Nameplates",
+        name = "Kui Nameplates (|c00ffffffWoTLK|r)",
         handler = handler,
         type = "group",
         get = "Get",
