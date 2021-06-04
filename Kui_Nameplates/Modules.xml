@@ -1,0 +1,12 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+<Script file="Modules\Arena.lua" />
+<Script file="Modules\Castbar.lua" />
+<Script file="Modules\CastWarnings.lua" />
+<Script file="Modules\ClassColours.lua" />
+<Script file="Modules\ComboPoints.lua" />
+<Script file="Modules\TankMode.lua" />
+<Script file="Modules\TargetArrows.lua" />
+<Script file="Modules\LowHealth.lua" />
+<Script file="Modules\NameOnly.lua" />
+</Ui>

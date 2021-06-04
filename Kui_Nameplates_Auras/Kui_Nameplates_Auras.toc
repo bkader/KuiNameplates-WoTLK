@@ -1,0 +1,14 @@
+## Interface: 30300
+## Author: Kesava
+## Title: Kui |cff9966ffNameplates|r Auras
+## Notes: Aura display plugin for Kui Nameplates
+## Dependencies: Kui_Nameplates
+## SavedVariables: KuiSpellListCustom
+## X-Curse-Packaged-Version: 260
+## X-Curse-Project-Name: KuiNameplates
+## X-Curse-Project-ID: kuinameplates
+## X-Curse-Repository-ID: wow/kuinameplates/mainline
+
+Embeds.xml
+Locales.xml
+Auras.lua

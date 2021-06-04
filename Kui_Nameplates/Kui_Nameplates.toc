@@ -1,10 +1,16 @@
 ## Interface: 30300
-## Author: Kesava (Kader Backport)
-## Title: |cff9900ffKui|r Nameplates (|c00ffffffWoTLK|r)
-## Notes: Prettier, lightweight, configurable nameplates.
-## SavedVariablesPerCharacter: KuiNameplatesDB
+## Author: Kesava
+## Title: Kui |cff9966ffNameplates|r
+## Version: 260
+## Notes: Prettier nameplates.
+## SavedVariables: KuiNameplatesGDB
+## X-Curse-Packaged-Version: 260
+## X-Curse-Project-Name: KuiNameplates
+## X-Curse-Project-ID: kuinameplates
+## X-Website: https://github.com/bkader/KuiNameplates-WoTLK
+## X-Email: bkader@email.com
 
-embeds.xml
-core.lua
-config.lua
-layout.lua
+Embeds.xml
+Locales.xml
+Core.xml
+Modules.xml

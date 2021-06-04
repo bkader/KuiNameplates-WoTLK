@@ -1,12 +1,8 @@
 
-	The following files are released under licenses which allow
-	redistribution for at least non-commercial purposes.
+ The following files are released under licenses which allow use in at least non-commercial applications.
 	
-	yanone.ttf, or Yanone Kaffeesatz Bold
-	By Yanone, downloaded from http://www.yanone.de/
-	
-	accid.ttf, or Accidental Presidency
-	By Tepid Monkey, downloaded from http://www.tepidmonkey.net/
+ yanone.ttf, or Yanone Kaffeesatz Bold
+ By Yanone @ yanone.de
 
-	-------------------------------------------------------------------
-	These are the only font files included in the download for Kui.
+ francois.ttf, or Francois One
+ By New Typography @ newtypography.co.uk
