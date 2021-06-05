@@ -1,7 +1,7 @@
 --[[
 -- Kui_Nameplates
 -- By Kesava at curse.com
--- Backported by: Kader at github.com/bkader
+-- Backported by: Kader at https://github.com/bkader
 --
 -- changes colour of health bars based on health percentage
 ]]

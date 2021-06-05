@@ -2,15 +2,15 @@
 -- Kui_Nameplates_Auras
 -- By Kesava at curse.com
 -- All rights reserved
-
-   Auras module for Kui_Nameplates core layout.
+-- Backported by: Kader at https://github.com/bkader
+-- Auras module for Kui_Nameplates core layout.
 ]]
 local addon = LibStub("AceAddon-3.0"):GetAddon("KuiNameplates")
 local spelllist = LibStub("KuiSpellList-1.0")
 local kui = LibStub("Kui-1.0")
 local mod = addon:NewModule("Auras", addon.Prototype, "AceEvent-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("KuiNameplatesAuras")
-local whitelist, _
+local whitelist, namedlist, _
 
 local GetTime, floor, ceil, format = GetTime, floor, ceil, format
 local UnitExists, UnitGUID = UnitExists, UnitGUID
@@ -263,7 +263,7 @@ local function OnAuraShow(self)
 	end
 	parent:ArrangeButtons()
 
-	addon:SendMessage("KuiNameplates_PostAuraShow", parent.frame, self.spellId)
+	addon:SendMessage("KuiNameplates_PostAuraShow", parent.frame, self.spellid)
 end
 local function OnAuraHide(self)
 	local parent = self:GetParent()
@@ -271,9 +271,9 @@ local function OnAuraHide(self)
 		return
 	end
 
-	if parent.spellIds[self.spellId] == self then
+	if parent.spellids[self.spellid] == self then
 		-- remove spell id from parent list
-		parent.spellIds[self.spellId] = nil
+		parent.spellids[self.spellid] = nil
 	end
 
 	self.time:Hide()
@@ -283,8 +283,8 @@ local function OnAuraHide(self)
 
 	parent:ArrangeButtons()
 
-	addon:SendMessage("KuiNameplates_PostAuraHide", parent.frame, self.spellId)
-	self.spellId = nil
+	addon:SendMessage("KuiNameplates_PostAuraHide", parent.frame, self.spellid)
+	self.spellid = nil
 end
 local function UpdateButtonDuration(button, duration)
 	if duration then
@@ -314,12 +314,12 @@ local function UpdateButtonDuration(button, duration)
 		button:GetParent():ArrangeButtons()
 	end
 end
-local function GetAuraButton(self, spellId, icon, count, duration, expirationTime)
+local function GetAuraButton(self, spellid, icon, count, duration, expirationTime)
 	local button
 
-	if self.spellIds[spellId] then
+	if self.spellids[spellid] then
 		-- use this spell's current button...
-		button = self.spellIds[spellId]
+		button = self.spellids[spellid]
 	elseif self.visible ~= #self.buttons then
 		-- .. or reuse a hidden button...
 		for k, b in pairs(self.buttons) do
@@ -370,27 +370,29 @@ local function GetAuraButton(self, spellId, icon, count, duration, expirationTim
 
 	button.duration = duration
 	button.expirationTime = expirationTime
-	button.spellId = spellId
+	button.spellid = spellid
 	button.elapsed = 0
 
 	UpdateButtonSize(self, button)
 	UpdateButtonDuration(button)
 
 	-- store this spell's original duration
-	stored_spells[spellId] = duration or 0
+	stored_spells[spellid] = duration or 0
 
-	self.spellIds[spellId] = button
+	self.spellids[spellid] = button
 
 	return button
 end
 local function DisplayAura(self, spellid, name, icon, count, duration, expirationTime)
-	--kui.print('aura application of '..name)
-	name = strlower(name) or nil
+	if not spellid then
+		return
+	end
+	name = name or GetSpellInfo(spellid)
 	if not name then
 		return
 	end
 
-	if db_behav.useWhitelist and not (whitelist[spellid] or whitelist[name]) then
+	if db_behav.useWhitelist and not (whitelist[spellid] or whitelist[name] or namedlist[name]) then
 		-- not in whitelist
 		return
 	end
@@ -432,7 +434,7 @@ function mod:Create(msg, frame)
 
 	frame.auras.visible = 0
 	frame.auras.buttons = {}
-	frame.auras.spellIds = {}
+	frame.auras.spellids = {}
 	frame.auras.GetAuraButton = GetAuraButton
 	frame.auras.ArrangeButtons = ArrangeButtons
 	frame.auras.DisplayAura = DisplayAura
@@ -457,7 +459,7 @@ function mod:Hide(msg, frame)
 	end
 end
 -------------------------------------------------------------- event handlers --
-function mod:COMBAT_LOG_EVENT_UNFILTERED(_, castTime, event, guid, name, _, destGUID, destName, _, spellid)
+function mod:COMBAT_LOG_EVENT_UNFILTERED(_, castTime, event, guid, name, _, destGUID, destName, _, spellid, spellname)
 	-- used to hide expired auras on previously known frames
 	-- to detect aura updates on the mouseover, if it exists
 	-- (since UNIT_AURA doesn't fire for mouseover)
@@ -489,23 +491,24 @@ function mod:COMBAT_LOG_EVENT_UNFILTERED(_, castTime, event, guid, name, _, dest
 			return
 		end
 
-		if not spellId then
+		if not (spellid or spellname) then
 			return
 		end
 
 		if REMOVAL_EVENTS[event] then
 			-- hide an aura button when the combat log reports it has expired
-			if f.auras.spellIds[spellid] then
-				f.auras.spellIds[spellid]:Hide()
+			local btn = f.auras.spellids[spellid] or f.auras.spellids[namedlist[spellname]]
+			if btn then
+				btn:Hide()
 			end
 		elseif ADDITION_EVENTS[event] then
-			if f.auras.spellIds[spellid] then
+			local btn = f.auras.spellids[spellid] or f.auras.spellids[namedlist[spellname]]
+			if btn then
 				-- reset timer to original duration
-				UpdateButtonDuration(f.auras.spellIds[spellid], stored_spells[spellid])
+				UpdateButtonDuration(btn, stored_spells[spellid])
 			else
 				-- show a placeholder button with no timer when possible
-				local spellName, _, icon = GetSpellInfo(spellid)
-				f.auras:DisplayAura(spellid, spellName, icon, 1)
+				f.auras:DisplayAura(spellid, spellname, select(3, GetSpellInfo(spellid)), 1)
 			end
 		end
 	end
@@ -539,7 +542,7 @@ function mod:UNIT_AURA(event, unit, frame)
 		filter = filter .. "HARMFUL"
 	end
 
-	for i = 0, 40 do
+	for i = 1, 40 do
 		local name, _, icon, count, _, duration, expirationTime, _, _, _, spellid = UnitAura(unit, i, filter)
 
 		if spellid then
@@ -562,6 +565,10 @@ end
 function mod:WhitelistChanged()
 	-- update spell whitelist
 	whitelist = spelllist.GetImportantSpells(select(2, UnitClass("player")))
+	namedlist = {}
+	for spellid, _ in pairs(whitelist) do
+		namedlist[GetSpellInfo(spellid)] = spellid
+	end
 end
 ---------------------------------------------------- Post db change functions --
 mod.configChangedListener = function(self)
@@ -577,7 +584,12 @@ mod.configChangedListener = function(self)
 	end
 end
 
-mod:AddConfigChanged("enabled", function(v) mod:Toggle(v) end)
+mod:AddConfigChanged(
+	"enabled",
+	function(v)
+		mod:Toggle(v)
+	end
+)
 
 mod:AddConfigChanged("icons", UpdateSizes, UpdateAllButtons)
 
@@ -619,10 +631,19 @@ function mod:GetOptions()
 				showSecondary = {
 					type = "toggle",
 					name = L["Show on secondary targets"],
-					desc = L[
-						"Attempt to show and refresh auras on secondary targets - i.e. nameplates which do not have a visible unit frame on the default UI. Particularly useful when tanking."
-					],
+					desc = L["Attempt to show and refresh auras on secondary targets - i.e. nameplates which do not have a visible unit frame on the default UI. Particularly useful when tanking."],
 					order = 10
+				},
+				customize = {
+					type = "execute",
+					name = L["Edit spell list"],
+					order = 20,
+					width = "double",
+					func = function()
+						addon:CloseConfig()
+						InterfaceOptionsFrame_OpenToCategory(L["Kui |cff9966ffSpell List|r"])
+						InterfaceOptionsFrame_OpenToCategory(L["Kui |cff9966ffSpell List|r"])
+					end
 				}
 			}
 		},

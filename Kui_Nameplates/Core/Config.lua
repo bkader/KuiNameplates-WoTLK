@@ -2,7 +2,7 @@
 -- Kui_Nameplates
 -- By Kesava at curse.com
 -- All rights reserved
--- Backported by: Kader at github.com/bkader
+-- Backported by: Kader at https://github.com/bkader
 ]]
 local addon = LibStub("AceAddon-3.0"):GetAddon("KuiNameplates")
 local kui = LibStub("Kui-1.0")
@@ -973,8 +973,15 @@ SLASH_KUINAMEPLATES1 = "/kuinameplates"
 SLASH_KUINAMEPLATES2 = "/knp"
 
 function SlashCmdList.KUINAMEPLATES()
+	addon:OpenConfig()
+end
+
+function addon:OpenConfig()
 	AceConfigDialog:SetDefaultSize("kuinameplates", 610, 500)
 	AceConfigDialog:Open("kuinameplates")
+end
+function addon:CloseConfig()
+	AceConfigDialog:Close("kuinameplates")
 end
 -- config handlers #############################################################
 do

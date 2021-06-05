@@ -2,7 +2,7 @@
 -- Kui_Nameplates
 -- By Kesava at curse.com
 -- All rights reserved
--- Backported by: Kader at github.com/bkader
+-- Backported by: Kader at https://github.com/bkader
 ]]
 local kui = LibStub("Kui-1.0")
 local LSM = LibStub("LibSharedMedia-3.0")

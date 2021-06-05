@@ -2,7 +2,7 @@
 -- Kui_Nameplates
 -- By Kesava at curse.com
 -- All rights reserved
--- Backported by: Kader at github.com/bkader
+-- Backported by: Kader at https://github.com/bkader
 ]]
 local addon = LibStub("AceAddon-3.0"):NewAddon("KuiNameplates", "AceEvent-3.0", "AceTimer-3.0")
 addon.version = GetAddOnMetadata("Kui_Nameplates", "Version")

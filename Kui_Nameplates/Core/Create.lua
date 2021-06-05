@@ -3,7 +3,7 @@
 -- By Kesava at curse.com
 -- All rights reserved
 -- Frame element creation/update functions
--- Backported by: Kader at github.com/bkader
+-- Backported by: Kader at https://github.com/bkader
 ]]
 local addon = LibStub("AceAddon-3.0"):GetAddon("KuiNameplates")
 local kui = LibStub("Kui-1.0")

@@ -29,3 +29,25 @@ L["Size (trivial)"] = "Taille (triviale)"
 L["Aura icon size on trivial frames"] = "Taille des icônes sur les barres triviales"
 L["Squareness"] = "Carré"
 L["Where 1 is completely square and .5 is completely rectangular"] = "Où 1 est complètement carré et .5 est complètement rectangulaire"
+
+L["Edit spell list"] = "Modifier la list des sorts"
+L["Kui |cff9966ffSpell List|r"] = "Kui |cff9966ffList des sorts|r"
+L["Verbatim"] = "Textuel"
+L["ADD_DESC "] = [[
+Convertit le nom en l'ID d'un sort sur votre grimoire et l'ajoute à la liste des sorts suivis.
+Il s'agit du comportement par défaut lorsque le texte d'entrée est en |cff88ff88vert|r.
+]]
+L["VERBATIM_DESC"] = [[
+Ajoute le sort sans le convertir à son ID. En d'autres termes et suit toute aura qui correspond à ce nom.
+Il s'agit du comportement par défaut lorsque le texte d'entrée est en |cffff0088rouge|r.
+Maintenez la touche MAJ tout en appuyant sur Entrée pour forcer cette action.
+]]
+
+L["HELP_TEXT"] = [[
+Entrez le |cffffff00nom|r ou l'|cffffff00ID|r d'un sort puis appuyez sur Entrée pour l'ajouter.
+|cffffff00Clic-droit|r sur les sorts pour les retiter ou ignorer.
+
+Les sorts ne seront détectés que par leurs noms s'ils sont connus (c'est-à-dire visibles et actives dans la page de votre spécialisation) Vous pouvez utiliser la commande |cffffff00/kslc dump|r pour trouver les ID de sorts une fois que vous les avez appliqués à votre cible.
+
+Passez la souris sur les boutons "Ajouter" et "Textuel" pour plus de détails sur ce que chacun d'eux fait.
+]]

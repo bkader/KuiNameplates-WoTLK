@@ -29,3 +29,25 @@ L["Size (trivial)"] = true
 L["Aura icon size on trivial frames"] = true
 L["Squareness"] = true
 L["Where 1 is completely square and .5 is completely rectangular"] = true
+
+L["Edit spell list"] = true
+L["Kui |cff9966ffSpell List|r"] = true
+L["Verbatim"] = true
+L["ADD_DESC "] = [[
+Resolve this name to the ID of a spell in your spellbook and add it to the tracked list.
+This is the default behaviour when the entry text is |cff88ff88green|r.
+]]
+L["VERBATIM_DESC"] = [[
+Add this spell without trying to resolve it to its ID. In other words, track any aura which matches this name.
+This is the default behaviour when the entry text is |cffff0088red|r.
+Hold shift while pressing enter to force this action.
+]]
+
+L["HELP_TEXT"] = [[
+Type the |cffffff00name|r or |cffffff00spell ID|r of an ability to track and press enter.
+|cffffff00Right-click|r spells to remove or ignore them.
+
+Abilities will only be recognised by name if they are in your currently active set of skills (i.e. visible and active in your specialisation's page of your spell book). You can use the slash command |cffffff00/kslc dump|r to find spell IDs of auras once you have applied them to your target.
+
+Mouseover the "Add" and "Verbatim" buttons for more detail about what each of them does.
+]]
