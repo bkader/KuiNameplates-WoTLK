@@ -7,7 +7,7 @@
 -- Modifications for plates while in an arena
 ]]
 local addon = LibStub("AceAddon-3.0"):GetAddon("KuiNameplates")
-local mod = addon:NewModule("Arena", addon.Prototype, "AceEvent-3.0")
+local mod = addon:NewModule("Arena", addon.Prototype, "AceEvent-3.0", "AceTimer-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("KuiNameplates")
 
 mod.uiName = L["Arena modifications"]
@@ -32,6 +32,7 @@ function mod:IsArenaPlate(frame)
 
 	-- unhandled name
 	frame.level:SetText("?")
+	self:ScheduleTimer("IsArenaPlate", 3, frame)
 end
 
 function mod:PostShow(msg, frame)
