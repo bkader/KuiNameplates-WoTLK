@@ -106,11 +106,11 @@ function addon:UpdateHealthBar(f, trivial)
 
 	if trivial then
 		f.health:SetSize(self.sizes.frame.twidth - 2, self.sizes.frame.theight - 2)
-		f.health:SetPoint("BOTTOMLEFT", f.x + 1, f.y + 1)
 	elseif not trivial then
 		f.health:SetSize(self.sizes.frame.width - 2, self.sizes.frame.height - 2)
-		f.health:SetPoint("BOTTOMLEFT", f.x + 1, f.y + 1)
 	end
+
+	f.health:SetPoint("BOTTOMLEFT", f.x + 1, f.y + 1)
 end
 ------------------------------------------------------------------- Highlight --
 function addon:CreateHighlight(frame, f)
@@ -131,7 +131,7 @@ end
 function addon:CreateHealthText(frame, f)
 	f.health.p = f:CreateFontString(f.overlay, {
 		font = self.font,
-		size = "name",
+		size = "health",
 		alpha = 1,
 		outline = "OUTLINE"
 	})
@@ -141,7 +141,6 @@ function addon:CreateHealthText(frame, f)
 	f.health.p:SetJustifyV("BOTTOM")
 
 	if self.db.profile.hp.text.mouseover then
-		-- hide initially
 		f.health.p:Hide()
 	end
 end
@@ -152,8 +151,7 @@ function addon:UpdateHealthText(f, trivial)
 		if not self.db.profile.hp.text.mouseover then
 			f.health.p:Show()
 		end
-
-		f.health.p:SetPoint("TOPRIGHT", f.health, "BOTTOMRIGHT", -2.5, self.db.profile.text.healthoffset + 4)
+		f.health.p:SetPoint("TOPRIGHT", f.health, "BOTTOMRIGHT", self.db.profile.text.healthoffsetx or 0, self.db.profile.text.healthoffsety or 0)
 	end
 end
 ------------------------------------------------------------------ Level text --
@@ -165,7 +163,7 @@ function addon:CreateLevel(frame, f)
 	f.level = f:CreateFontString(f.level, {
 		reset = true,
 		font = self.font,
-		size = "name",
+		size = "level",
 		alpha = 1,
 		outline = "OUTLINE"
 	})
@@ -184,7 +182,7 @@ function addon:UpdateLevel(f, trivial)
 	if trivial then
 		f.level:Hide()
 	else
-		f.level:SetPoint("TOPLEFT", f.health, "BOTTOMLEFT", 2.5, self.db.profile.text.healthoffset + 4)
+		f.level:SetPoint("TOPLEFT", f.health, "BOTTOMLEFT", self.db.profile.text.leveloffsetx or 2.5, self.db.profile.text.leveloffsety or 0)
 	end
 end
 ------------------------------------------------------------------- Name text --
@@ -194,6 +192,7 @@ function addon:CreateName(frame, f)
 		size = "name",
 		outline = "OUTLINE"
 	})
+
 	f.name:SetHeight(10)
 end
 function addon:UpdateName(f, trivial)
@@ -202,15 +201,11 @@ function addon:UpdateName(f, trivial)
 	f.name:SetJustifyH("CENTER")
 	f.name:SetWidth(0)
 
+	f.name:SetPoint("BOTTOM", f.health, "TOP", self.db.profile.text.nameoffsetx or 2.5, self.db.profile.text.nameoffsety or 0)
 	if trivial then
-		f.name:SetPoint("BOTTOM", f.health, "TOP", .5, -self.db.profile.text.healthoffset)
 		f.name:SetWidth(addon.sizes.frame.twidth * 2)
-		f.name:SetJustifyH("CENTER")
 	else
-		-- move to top center
-		f.name:SetPoint("BOTTOM", f.health, "TOP", .5, -self.db.profile.text.healthoffset)
 		f.name:SetWidth(addon.sizes.frame.width * 2)
-		f.name:SetJustifyH("CENTER")
 	end
 end
 ----------------------------------------------------------------- Target glow --

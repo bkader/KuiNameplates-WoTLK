@@ -1,10 +1,10 @@
 ## Interface: 30300
 ## Author: Kesava
 ## Title: Kui |cff9966ffNameplates|r
-## Version: 260
+## Version: 261
 ## Notes: Prettier nameplates.
 ## SavedVariables: KuiNameplatesGDB
-## X-Curse-Packaged-Version: 260
+## X-Curse-Packaged-Version: 261
 ## X-Curse-Project-Name: KuiNameplates
 ## X-Curse-Project-ID: kuinameplates
 ## X-Website: https://github.com/bkader/KuiNameplates-WoTLK

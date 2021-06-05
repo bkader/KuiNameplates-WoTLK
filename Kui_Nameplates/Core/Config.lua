@@ -307,7 +307,9 @@ do
 			website = {
 				type = "execute",
 				name = L["Website"],
-				func = function() StaticPopup_Show("KUINAMEPLATES_GITHUB") end,
+				func = function()
+					StaticPopup_Show("KUINAMEPLATES_GITHUB")
+				end,
 				order = 2
 			},
 			general = {
@@ -562,14 +564,77 @@ do
 						desc = L["Show levels on nameplates."] .. RELOAD_HINT,
 						order = 0
 					},
-					healthoffset = {
-						type = "range",
-						name = L["Health bar text offset"],
-						desc = L["Vertical offset of the text on the top and bottom of the health bar: level, name and health.\nNote that the default value ends in .5 as this prevents jittering text."],
-						bigStep = 0.5,
-						softMin = -10,
-						softMax = 20,
-						order = 10
+					nametext = {
+						type = "group",
+						name = NAME,
+						inline = true,
+						order = 1,
+						args = {
+							nameoffsetx = {
+								type = "range",
+								name = L["X Offset"],
+								bigStep = 0.5,
+								softMin = -10,
+								softMax = 20,
+								order = 1
+							},
+							nameoffsety = {
+								type = "range",
+								name = L["Y Offset"],
+								bigStep = 0.5,
+								softMin = -10,
+								softMax = 20,
+								order = 2
+							}
+						}
+					},
+					leveltext = {
+						type = "group",
+						name = LEVEL,
+						inline = true,
+						order = 2,
+						args = {
+							leveloffsetx = {
+								type = "range",
+								name = L["X Offset"],
+								bigStep = 0.5,
+								softMin = -10,
+								softMax = 20,
+								order = 1
+							},
+							leveloffsety = {
+								type = "range",
+								name = L["Y Offset"],
+								bigStep = 0.5,
+								softMin = -10,
+								softMax = 20,
+								order = 2
+							}
+						}
+					},
+					healthtext = {
+						type = "group",
+						name = HEALTH,
+						inline = true,
+						order = 3,
+						args = {
+							healthoffsetx = {
+								type = "range",
+								name = L["X Offset"],
+								bigStep = 0.5,
+								softMin = -10,
+								softMax = 20,
+								order = 1
+							},
+							healthoffsety = {
+								type = "range",
+								name = L["Y Offset"],
+								bigStep = 0.5,
+								softMin = -10,
+								softMax = 20,
+								order = 2
+							}
+						}
 					}
 				}
 			},
@@ -639,8 +704,7 @@ do
 							hp_text_disabled = {
 								type = "toggle",
 								name = L["Never show health text"],
-								order = 0,
-								disabled = false
+								order = 0
 							},
 							mouseover = {
 								type = "toggle",
@@ -750,18 +814,35 @@ do
 							},
 							name = {
 								type = "range",
-								name = L["Name"],
-								order = 10,
+								name = NAME,
+								order = 2,
 								step = 1,
 								min = 1,
 								softMin = 1,
-								softMax = 30,
-								disabled = false
+								softMax = 30
+							},
+							level = {
+								type = "range",
+								name = LEVEL,
+								order = 3,
+								step = 1,
+								min = 1,
+								softMin = 1,
+								softMax = 30
+							},
+							health = {
+								type = "range",
+								name = HEALTH,
+								order = 4,
+								step = 1,
+								min = 1,
+								softMin = 1,
+								softMax = 30
 							},
 							spellname = {
 								type = "range",
 								name = L["Spell name"],
-								order = 20,
+								order = 5,
 								step = 1,
 								min = 1,
 								softMin = 1,
@@ -770,7 +851,7 @@ do
 							large = {
 								type = "range",
 								name = L["Large"],
-								order = 30,
+								order = 6,
 								step = 1,
 								min = 1,
 								softMin = 1,
@@ -779,7 +860,7 @@ do
 							small = {
 								type = "range",
 								name = L["Small"],
-								order = 40,
+								order = 7,
 								step = 1,
 								min = 1,
 								softMin = 1,
@@ -917,22 +998,33 @@ do
 
 	-- post db change hooks ####################################################
 	-- n.b. this is better
-	addon:AddConfigChanged({"fonts", "options", "font"}, function(v)
-		addon.font = LSM:Fetch(LSM.MediaType.FONT, v)
-		addon:UpdateAllFonts()
-	end)
-
-	addon:AddConfigChanged({"fonts", "options", "outline"}, nil, function(f, v)
-		for _, fontObject in pairs(f.fontObjects) do
-			kui.ModifyFontFlags(fontObject, v, "OUTLINE")
+	addon:AddConfigChanged(
+		{"fonts", "options", "font"},
+		function(v)
+			addon.font = LSM:Fetch(LSM.MediaType.FONT, v)
+			addon:UpdateAllFonts()
 		end
-	end)
+	)
 
-	addon:AddConfigChanged({"fonts", "options", "monochrome"}, nil, function(f, v)
-		for _, fontObject in pairs(f.fontObjects) do
-			kui.ModifyFontFlags(fontObject, v, "MONOCHROME")
+	addon:AddConfigChanged(
+		{"fonts", "options", "outline"},
+		nil,
+		function(f, v)
+			for _, fontObject in pairs(f.fontObjects) do
+				kui.ModifyFontFlags(fontObject, v, "OUTLINE")
+			end
 		end
-	end)
+	)
+
+	addon:AddConfigChanged(
+		{"fonts", "options", "monochrome"},
+		nil,
+		function(f, v)
+			for _, fontObject in pairs(f.fontObjects) do
+				kui.ModifyFontFlags(fontObject, v, "MONOCHROME")
+			end
+		end
+	)
 
 	addon:AddConfigChanged(
 		{
@@ -953,32 +1045,94 @@ do
 	)
 
 	addon:AddConfigChanged(
-		{"text", "healthoffset"},
-		function()
-			addon.sizes.tex.healthOffset = addon.db.profile.text.healthoffset
+		{"text", "nametext", "nameoffsetx"},
+		function(val)
+			addon.db.profile.text.nameoffsetx = val
+			addon.sizes.tex.nameOffsetX = addon.db.profile.text.nameoffsetx
 		end,
 		function(f)
-			addon:UpdateHealthText(f, f.trivial)
-			addon:UpdateLevel(f, f.trivial)
+			addon:UpdateName(f, f.trivial)
+		end
+	)
+	addon:AddConfigChanged(
+		{"text", "nametext", "nameoffsety"},
+		function(val)
+			addon.db.profile.text.nameoffsety = val
+			addon.sizes.tex.nameOffsetX = addon.db.profile.text.nameoffsetx
+		end,
+		function(f)
 			addon:UpdateName(f, f.trivial)
 		end
 	)
 
-	addon:AddConfigChanged({"hp", "text"}, nil, function(f)
-		if f:IsShown() then
-			f:OnHealthValueChanged()
+	addon:AddConfigChanged(
+		{"text", "leveltext", "leveloffsetx"},
+		function(val)
+			addon.db.profile.text.leveloffsetx = val
+			addon.sizes.tex.levelOffsetX = addon.db.profile.text.leveloffsetx
+		end,
+		function(f)
+			addon:UpdateLevel(f, f.trivial)
 		end
-	end)
-	addon:AddConfigChanged({"hp", "text", "mouseover"}, nil, function(f, v)
-		if not v and f.health and f.health.p then
-			f.health.p:Show()
+	)
+	addon:AddConfigChanged(
+		{"text", "leveltext", "leveloffsety"},
+		function(val)
+			addon.db.profile.text.leveloffsety = val
+			addon.sizes.tex.levelOffsetX = addon.db.profile.text.leveloffsetx
+		end,
+		function(f)
+			addon:UpdateLevel(f, f.trivial)
 		end
-	end)
+	)
 
-	addon:AddConfigChanged({"general", "bartexture"}, function(v)
-		addon.bartexture = LSM:Fetch(LSM.MediaType.STATUSBAR, v)
-		UpdateAllBars()
-	end)
+	addon:AddConfigChanged(
+		{"text", "healthtext", "healthoffsetx"},
+		function(val)
+			addon.db.profile.text.healthoffsetx = val
+			addon.sizes.tex.healthOffsetX = addon.db.profile.text.healthoffsetx
+		end,
+		function(f)
+			addon:UpdateHealthText(f, f.trivial)
+		end
+	)
+	addon:AddConfigChanged(
+		{"text", "healthtext", "healthoffsety"},
+		function(val)
+			addon.db.profile.text.healthoffsety = val
+			addon.sizes.tex.healthOffsetX = addon.db.profile.text.healthoffsetx
+		end,
+		function(f)
+			addon:UpdateHealthText(f, f.trivial)
+		end
+	)
+
+	addon:AddConfigChanged(
+		{"hp", "text"},
+		nil,
+		function(f)
+			if f:IsShown() then
+				f:OnHealthValueChanged()
+			end
+		end
+	)
+	addon:AddConfigChanged(
+		{"hp", "text", "mouseover"},
+		nil,
+		function(f, v)
+			if not v and f.health and f.health.p then
+				f.health.p:Show()
+			end
+		end
+	)
+
+	addon:AddConfigChanged(
+		{"general", "bartexture"},
+		function(v)
+			addon.bartexture = LSM:Fetch(LSM.MediaType.STATUSBAR, v)
+			UpdateAllBars()
+		end
+	)
 
 	addon:AddConfigChanged(
 		{"general", "targetglowcolour"},
@@ -995,7 +1149,13 @@ do
 		end
 	)
 
-	addon:AddConfigChanged({"general", "strata"}, nil, function(f, v) f:SetFrameStrata(v) end)
+	addon:AddConfigChanged(
+		{"general", "strata"},
+		nil,
+		function(f, v)
+			f:SetFrameStrata(v)
+		end
+	)
 
 	do
 		local function UpdateFrameSize(frame)

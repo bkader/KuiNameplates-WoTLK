@@ -41,6 +41,8 @@ addon.defaultFontSizes = {
 	large = 12,
 	spellname = 11,
 	name = 11,
+	level = 11,
+	health = 11,
 	small = 9
 }
 
@@ -96,7 +98,12 @@ local defaults = {
 		},
 		text = {
 			level = false, -- display levels
-			healthoffset = 2.5
+			nameoffsetx = 0,
+			nameoffsety = 0,
+			leveloffsetx = 0,
+			leveloffsety = 2.5,
+			healthoffsetx = 0,
+			healthoffsety = 2.5
 		},
 		hp = {
 			reactioncolours = {
@@ -131,6 +138,8 @@ local defaults = {
 				large = 12,
 				spellname = 11,
 				name = 11,
+				level = 11,
+				health = 11,
 				small = 9
 			}
 		}
@@ -432,9 +441,13 @@ function addon:UpdateSizesTable()
 	addon.sizes.frame.theight = addon.db.profile.general.thheight
 	addon.sizes.frame.width = addon.db.profile.general.width
 	addon.sizes.frame.twidth = addon.db.profile.general.twidth
-
 	addon.sizes.tex.raidicon = addon.db.profile.general.raidicon_size
-	addon.sizes.tex.healthOffset = addon.db.profile.text.healthoffset
+	addon.sizes.tex.healthOffsetX = addon.db.profile.text.healthoffsetx
+	addon.sizes.tex.healthOffsetY = addon.db.profile.text.healthoffsety
+	addon.sizes.tex.levelOffsetX = addon.db.profile.text.leveloffsetx
+	addon.sizes.tex.levelOffsetY = addon.db.profile.text.leveloffsety
+	addon.sizes.tex.nameOffsetX = addon.db.profile.text.nameoffsetx
+	addon.sizes.tex.nameOffsetY = addon.db.profile.text.nameoffsety
 	addon.sizes.tex.targetGlowW = addon.sizes.frame.width - 5
 	addon.sizes.tex.ttargetGlowW = addon.sizes.frame.twidth - 5
 end
