@@ -12,6 +12,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("KuiNameplates")
 
 mod.uiName = L["Arena modifications"]
 
+local UnitExists, UnitName = UnitExists, UnitName
 local in_arena
 
 function mod:IsArenaPlate(frame)
@@ -21,14 +22,10 @@ function mod:IsArenaPlate(frame)
 	end
 
 	for i = 1, 5 do
-		if not UnitExists("arena" .. i) then
-			return
-		end
-
-		if frame.name.text == GetUnitName("arena" .. i) then
+		if UnitExists("arena" .. i) and frame.name.text == UnitName("arena" .. i) then
 			frame.level:SetText(i)
 			return
-		elseif UnitExists("arenapet" .. i) and frame.name.text == GetUnitName("arenapet" .. i) then
+		elseif UnitExists("arenapet" .. i) and frame.name.text == UnitName("arenapet" .. i) then
 			frame.level:SetText(i .. "*")
 			return
 		end
@@ -52,10 +49,7 @@ function mod:UNIT_NAME_UPDATE(event, unit)
 	end
 
 	local frame = addon:GetUnitPlate(unit)
-	if not frame then
-		return
-	end
-	if frame.friend then
+	if not frame or frame.friend then
 		return
 	end
 
