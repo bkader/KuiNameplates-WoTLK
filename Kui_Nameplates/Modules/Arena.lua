@@ -7,7 +7,7 @@
 -- Modifications for plates while in an arena
 ]]
 local addon = LibStub("AceAddon-3.0"):GetAddon("KuiNameplates")
-local mod = addon:NewModule("Arena", addon.Prototype, "AceEvent-3.0", "AceTimer-3.0")
+local mod = addon:NewModule("Arena", addon.Prototype, "AceEvent-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("KuiNameplates")
 
 mod.uiName = L["Arena modifications"]
@@ -20,19 +20,22 @@ function mod:IsArenaPlate(frame)
 		return
 	end
 
-	for i = 1, GetNumArenaOpponents() do
+	for i = 1, 5 do
+		if not UnitExists("arena" .. i) then
+			return
+		end
+
 		if frame.name.text == GetUnitName("arena" .. i) then
 			frame.level:SetText(i)
 			return
-		elseif frame.name.text == GetUnitName("arenapet" .. i) then
+		elseif UnitExists("arenapet" .. i) and frame.name.text == GetUnitName("arenapet" .. i) then
 			frame.level:SetText(i .. "*")
 			return
 		end
 	end
 
 	-- unhandled name
-	frame.level:SetText("?")
-	self:ScheduleTimer("IsArenaPlate", 3, frame)
+	frame.level:SetText()
 end
 
 function mod:PostShow(msg, frame)
@@ -61,7 +64,7 @@ function mod:UNIT_NAME_UPDATE(event, unit)
 	frame.level:Show()
 end
 
-function mod:PLAYER_ENTERING_WORLD()
+function mod:CheckArena()
 	local in_instance, instance_type = IsInInstance()
 	if in_instance and instance_type == "arena" then
 		in_arena = true
@@ -79,5 +82,10 @@ function mod:OnInitialize()
 end
 
 function mod:OnEnable()
-	self:RegisterEvent("PLAYER_ENTERING_WORLD")
+	self:RegisterEvent("PLAYER_ENTERING_WORLD", "CheckArena")
+	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", "CheckArena")
+end
+
+function mod:OnDisable()
+	self:UnregisterAllEvents()
 end
