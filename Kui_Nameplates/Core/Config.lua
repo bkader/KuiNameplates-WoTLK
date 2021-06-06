@@ -394,9 +394,7 @@ do
 						name = L["Highlight target"],
 						desc = L["Also highlight the current target."],
 						order = 50,
-						disabled = function()
-							return not addon.db.profile.general.highlight
-						end
+						disabled = function() return not addon.db.profile.general.highlight end
 					},
 					glowshadow = {
 						type = "toggle",
@@ -547,9 +545,7 @@ do
 						min = 0,
 						softMax = 5,
 						order = 40,
-						disabled = function()
-							return not addon.db.profile.fade.smooth
-						end
+						disabled = function() return not addon.db.profile.fade.smooth end
 					}
 				}
 			},
@@ -697,9 +693,6 @@ do
 						name = L["Health text"],
 						inline = true,
 						order = 30,
-						disabled = function(info)
-							return addon.db.profile.hp.text.hp_text_disabled
-						end,
 						args = {
 							hp_text_disabled = {
 								type = "toggle",
@@ -710,35 +703,40 @@ do
 								type = "toggle",
 								name = L["Mouseover & target only"],
 								desc = L["Only show health text upon mouseover or on the current target"],
-								order = 10
+								order = 10,
+								disabled = function(info) return addon.db.profile.hp.text.hp_text_disabled end
 							},
 							hp_friend_max = {
 								type = "select",
 								name = L["Max. health friend"],
 								desc = L["Health text to show on maximum health friendly units"],
 								values = HealthTextSelectList,
-								order = 20
+								order = 20,
+								disabled = function(info) return addon.db.profile.hp.text.hp_text_disabled end
 							},
 							hp_friend_low = {
 								type = "select",
 								name = L["Damaged friend"],
 								desc = L["Health text to show on damaged friendly units"],
 								values = HealthTextSelectList,
-								order = 30
+								order = 30,
+								disabled = function(info) return addon.db.profile.hp.text.hp_text_disabled end
 							},
 							hp_hostile_max = {
 								type = "select",
 								name = L["Max. health hostile"],
 								desc = L["Health text to show on maximum health hostile units"],
 								values = HealthTextSelectList,
-								order = 40
+								order = 40,
+								disabled = function(info) return addon.db.profile.hp.text.hp_text_disabled end
 							},
 							hp_hostile_low = {
 								type = "select",
 								name = L["Damaged hostile"],
 								desc = L["Health text to show on damaged hostile units"],
 								values = HealthTextSelectList,
-								order = 50
+								order = 50,
+								disabled = function(info) return addon.db.profile.hp.text.hp_text_disabled end
 							}
 						}
 					}
@@ -802,9 +800,7 @@ do
 						name = L["Font sizes"],
 						inline = true,
 						order = 20,
-						disabled = function()
-							return addon.db.profile.fonts.options.onesize
-						end,
+						disabled = function() return addon.db.profile.fonts.options.onesize end,
 						args = {
 							desc = {
 								type = "description",
