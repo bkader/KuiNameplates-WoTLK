@@ -139,6 +139,7 @@ function addon:CreateHealthText(frame, f)
 	f.health.p:SetHeight(10)
 	f.health.p:SetJustifyH("RIGHT")
 	f.health.p:SetJustifyV("BOTTOM")
+	f.health.p.osize = "health" -- original font size used to update/restore
 
 	if self.db.profile.hp.text.mouseover then
 		f.health.p:Hide()
@@ -173,6 +174,7 @@ function addon:CreateLevel(frame, f)
 	f.level:SetJustifyV("BOTTOM")
 	f.level:SetHeight(10)
 	f.level:ClearAllPoints()
+	f.level.osize = "level" -- original font size used to update/restore
 
 	if self.db.profile.text.level then
 		f.level.enabled = true
@@ -193,6 +195,7 @@ function addon:CreateName(frame, f)
 		outline = "OUTLINE"
 	})
 
+	f.name.osize = "name" -- original font size used to update/restore
 	f.name:SetHeight(10)
 end
 function addon:UpdateName(f, trivial)

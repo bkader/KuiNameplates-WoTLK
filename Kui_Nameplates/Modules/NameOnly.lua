@@ -245,9 +245,7 @@ function mod:GetOptions()
 					min = 1,
 					softMin = 1,
 					softMax = 30,
-					disabled = function()
-						return addon.db.profile.fonts.options.onesize
-					end
+					disabled = function() return addon.db.profile.fonts.options.onesize end
 				},
 				fontsizeplayer = {
 					type = "range",
@@ -257,9 +255,7 @@ function mod:GetOptions()
 					min = 1,
 					softMin = 1,
 					softMax = 30,
-					disabled = function()
-						return addon.db.profile.fonts.options.onesize
-					end
+					disabled = function() return addon.db.profile.fonts.options.onesize end
 				},
 				fontsizetrivial = {
 					type = "range",
@@ -269,9 +265,7 @@ function mod:GetOptions()
 					min = 1,
 					softMin = 1,
 					softMax = 30,
-					disabled = function()
-						return addon.db.profile.fonts.options.onesize
-					end
+					disabled = function() return addon.db.profile.fonts.options.onesize end
 				}
 			}
 		},

@@ -353,9 +353,7 @@ end
 
 -- given to fontstrings created with frame:CreateFontString (below)
 local function SetFontSize(fs, size)
-	if addon.db.profile.fonts.options.onesize then
-		size = "name"
-	end
+	size = addon.db.profile.fonts.options.onesize and "name" or fs.osize or fs.size
 
 	if type(size) == "string" and fs.size and addon.sizes.font[size] then
 		-- if fontsize is a key of the font sizes table, store it so that
