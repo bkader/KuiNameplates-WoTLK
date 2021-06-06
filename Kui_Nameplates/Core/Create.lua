@@ -138,7 +138,7 @@ function addon:CreateHealthText(frame, f)
 
 	f.health.p:SetHeight(10)
 	f.health.p:SetJustifyH("RIGHT")
-	f.health.p:SetJustifyV("BOTTOM")
+	f.health.p:SetJustifyV("MIDDLE")
 	f.health.p.osize = "health" -- original font size used to update/restore
 
 	if self.db.profile.hp.text.mouseover then
@@ -152,7 +152,30 @@ function addon:UpdateHealthText(f, trivial)
 		if not self.db.profile.hp.text.mouseover then
 			f.health.p:Show()
 		end
-		f.health.p:SetPoint("TOPRIGHT", f.health, "BOTTOMRIGHT", self.db.profile.text.healthoffsetx or 0, self.db.profile.text.healthoffsety or 0)
+
+		local anch2, anch1 = self.db.profile.text.healthanchorpoint or "BOTTOMRIGHT"
+
+		if anch2:find("BOTTOM") then
+			anch1 = "TOP"
+			f.health.p:SetJustifyV("BOTTOM")
+		elseif anch2:find("TOP") then
+			anch1 = "BOTTOM"
+			f.health.p:SetJustifyV("TOP")
+		else
+			anch1 = ""
+			f.health.p:SetJustifyV("MIDDLE")
+		end
+
+		if anch2:find("LEFT") then
+			anch1 = anch1 .. "LEFT"
+			f.health.p:SetJustifyH("LEFT")
+		elseif anch2:find("RIGHT") then
+			anch1 = anch1 .. "RIGHT"
+			f.health.p:SetJustifyH("RIGHT")
+		end
+
+		f.health.p:ClearAllPoints()
+		f.health.p:SetPoint(anch1, f.health, anch2, self.db.profile.text.healthoffsetx or 0, self.db.profile.text.healthoffsety or 0)
 	end
 end
 ------------------------------------------------------------------ Level text --
@@ -171,7 +194,7 @@ function addon:CreateLevel(frame, f)
 
 	f.level:SetParent(f.overlay)
 	f.level:SetJustifyH("LEFT")
-	f.level:SetJustifyV("BOTTOM")
+	f.level:SetJustifyV("MIDDLE")
 	f.level:SetHeight(10)
 	f.level:ClearAllPoints()
 	f.level.osize = "level" -- original font size used to update/restore
@@ -184,7 +207,29 @@ function addon:UpdateLevel(f, trivial)
 	if trivial then
 		f.level:Hide()
 	else
-		f.level:SetPoint("TOPLEFT", f.health, "BOTTOMLEFT", self.db.profile.text.leveloffsetx or 2.5, self.db.profile.text.leveloffsety or 0)
+		local anch2, anch1 = self.db.profile.text.levelanchorpoint or "BOTTOMLEFT"
+
+		if anch2:find("BOTTOM") then
+			f.level:SetJustifyV("BOTTOM")
+			anch1 = "TOP"
+		elseif anch2:find("TOP") then
+			f.level:SetJustifyV("TOP")
+			anch1 = "BOTTOM"
+		else
+			anch1 = ""
+			f.level:SetJustifyV("MIDDLE")
+		end
+
+		if anch2:find("LEFT") then
+			anch1 = anch1 .. "LEFT"
+			f.level:SetJustifyH("LEFT")
+		elseif anch2:find("RIGHT") then
+			anch1 = anch1 .. "RIGHT"
+			f.level:SetJustifyH("RIGHT")
+		end
+
+		f.level:ClearAllPoints()
+		f.level:SetPoint(anch1, f.health, anch2, self.db.profile.text.leveloffsetx or 2.5, self.db.profile.text.leveloffsety or 0)
 	end
 end
 ------------------------------------------------------------------- Name text --
@@ -200,11 +245,28 @@ function addon:CreateName(frame, f)
 end
 function addon:UpdateName(f, trivial)
 	f.name:ClearAllPoints()
-	f.name:SetJustifyV("BOTTOM")
-	f.name:SetJustifyH("CENTER")
 	f.name:SetWidth(0)
 
-	f.name:SetPoint("BOTTOM", f.health, "TOP", self.db.profile.text.nameoffsetx or 2.5, self.db.profile.text.nameoffsety or 0)
+	local anch2, anch1 = self.db.profile.text.nameanchorpoint or "TOP"
+	if anch2 == "BOTTOM" then
+		anch1 = "TOP"
+		f.name:SetJustifyV("TOP")
+		f.name:SetJustifyH("CENTER")
+	elseif anch2 == "TOP" then
+		anch1 = "BOTTOM"
+		f.name:SetJustifyV("BOTTOM")
+		f.name:SetJustifyH("CENTER")
+	elseif anch2 == "LEFT" then
+		anch1 = "RIGHT"
+		f.name:SetJustifyV("MIDDLE")
+		f.name:SetJustifyH("RIGHT")
+	elseif anch2 == "RIGHT" then
+		anch1 = "LEFT"
+		f.name:SetJustifyV("MIDDLE")
+		f.name:SetJustifyH("LEFT")
+	end
+
+	f.name:SetPoint(anch1, f.health, anch2, self.db.profile.text.nameoffsetx or 2.5, self.db.profile.text.nameoffsety or 0)
 	if trivial then
 		f.name:SetWidth(addon.sizes.frame.twidth * 2)
 	else

@@ -25,6 +25,24 @@ do
 		["TOOLTIP"] = "6. TOOLTIP"
 	}
 
+	local AnchorSelectList = {
+		TOP = L["Top"],
+		BOTTOM = L["Bottom"],
+		LEFT = L["Left"],
+		RIGHT = L["Right"],
+		TOPLEFT = L["Top Left"],
+		TOPRIGHT = L["Top Right"],
+		BOTTOMLEFT = L["Bottom Left"],
+		BOTTOMRIGHT = L["Bottom Right"]
+	}
+
+	local SimpleAnchorSelectList = {
+		TOP = L["Top"],
+		BOTTOM = L["Bottom"],
+		LEFT = L["Left"],
+		RIGHT = L["Right"]
+	}
+
 	local HealthTextSelectList = {
 		L["Current"] .. " |cff888888(145k)",
 		L["Maximum"] .. " |cff888888(156k)",
@@ -33,11 +51,7 @@ do
 		L["Blank"] .. " |cff888888(  )"
 	}
 
-	local HealthAnimationSelectList = {
-		NONE,
-		L["Smooth"],
-		L["Cutaway"]
-	}
+	local HealthAnimationSelectList = {NONE, L["Smooth"], L["Cutaway"]}
 
 	local globalConfigChangedListeners = {}
 
@@ -307,9 +321,7 @@ do
 			website = {
 				type = "execute",
 				name = L["Website"],
-				func = function()
-					StaticPopup_Show("KUINAMEPLATES_GITHUB")
-				end,
+				func = function() StaticPopup_Show("KUINAMEPLATES_GITHUB") end,
 				order = 2
 			},
 			general = {
@@ -566,21 +578,28 @@ do
 						inline = true,
 						order = 1,
 						args = {
+							nameanchorpoint = {
+								type = "select",
+								name = L["Anchor Point"],
+								values = SimpleAnchorSelectList,
+								order = 1,
+								width = "double"
+							},
 							nameoffsetx = {
 								type = "range",
 								name = L["X Offset"],
 								bigStep = 0.5,
-								softMin = -10,
+								softMin = -20,
 								softMax = 20,
-								order = 1
+								order = 20
 							},
 							nameoffsety = {
 								type = "range",
 								name = L["Y Offset"],
 								bigStep = 0.5,
-								softMin = -10,
+								softMin = -20,
 								softMax = 20,
-								order = 2
+								order = 30
 							}
 						}
 					},
@@ -590,11 +609,18 @@ do
 						inline = true,
 						order = 2,
 						args = {
+							levelanchorpoint = {
+								type = "select",
+								name = L["Anchor Point"],
+								values = AnchorSelectList,
+								order = 1,
+								width = "double"
+							},
 							leveloffsetx = {
 								type = "range",
 								name = L["X Offset"],
 								bigStep = 0.5,
-								softMin = -10,
+								softMin = -20,
 								softMax = 20,
 								order = 1
 							},
@@ -602,7 +628,7 @@ do
 								type = "range",
 								name = L["Y Offset"],
 								bigStep = 0.5,
-								softMin = -10,
+								softMin = -20,
 								softMax = 20,
 								order = 2
 							}
@@ -614,11 +640,18 @@ do
 						inline = true,
 						order = 3,
 						args = {
+							healthanchorpoint = {
+								type = "select",
+								name = L["Anchor Point"],
+								values = AnchorSelectList,
+								order = 1,
+								width = "double"
+							},
 							healthoffsetx = {
 								type = "range",
 								name = L["X Offset"],
 								bigStep = 0.5,
-								softMin = -10,
+								softMin = -20,
 								softMax = 20,
 								order = 1
 							},
@@ -626,7 +659,7 @@ do
 								type = "range",
 								name = L["Y Offset"],
 								bigStep = 0.5,
-								softMin = -10,
+								softMin = -20,
 								softMax = 20,
 								order = 2
 							}
@@ -800,7 +833,9 @@ do
 						name = L["Font sizes"],
 						inline = true,
 						order = 20,
-						disabled = function() return addon.db.profile.fonts.options.onesize end,
+						disabled = function()
+							return addon.db.profile.fonts.options.onesize
+						end,
 						args = {
 							desc = {
 								type = "description",
@@ -1048,6 +1083,16 @@ do
 	)
 
 	addon:AddConfigChanged(
+		{"text", "nametext", "nameanchorpoint"},
+		function(val)
+			addon.db.profile.text.nameanchorpoint = val
+		end,
+		function(f)
+			addon:UpdateName(f, f.trivial)
+		end
+	)
+
+	addon:AddConfigChanged(
 		{"text", "nametext", "nameoffsetx"},
 		function(val)
 			addon.db.profile.text.nameoffsetx = val
@@ -1069,6 +1114,16 @@ do
 	)
 
 	addon:AddConfigChanged(
+		{"text", "leveltext", "levelanchorpoint"},
+		function(val)
+			addon.db.profile.text.levelanchorpoint = val
+		end,
+		function(f)
+			addon:UpdateLevel(f, f.trivial)
+		end
+	)
+
+	addon:AddConfigChanged(
 		{"text", "leveltext", "leveloffsetx"},
 		function(val)
 			addon.db.profile.text.leveloffsetx = val
@@ -1086,6 +1141,16 @@ do
 		end,
 		function(f)
 			addon:UpdateLevel(f, f.trivial)
+		end
+	)
+
+	addon:AddConfigChanged(
+		{"text", "healthtext", "healthanchorpoint"},
+		function(val)
+			addon.db.profile.text.healthanchorpoint = val
+		end,
+		function(f)
+			addon:UpdateHealthText(f, f.trivial)
 		end
 	)
 

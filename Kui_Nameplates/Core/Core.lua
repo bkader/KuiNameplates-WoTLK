@@ -98,10 +98,13 @@ local defaults = {
 		},
 		text = {
 			level = false, -- display levels
+			nameanchorpoint = "TOP",
 			nameoffsetx = 0,
 			nameoffsety = 0,
+			levelanchorpoint = "BOTTOMLEFT",
 			leveloffsetx = 0,
 			leveloffsety = 2.5,
+			levelanchorpoint = "BOTTOMRIGHT",
 			healthoffsetx = 0,
 			healthoffsety = 2.5
 		},
