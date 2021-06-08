@@ -487,7 +487,7 @@ function mod:COMBAT_LOG_EVENT_UNFILTERED(_, castTime, event, guid, name, _, dest
 		if not f or not f.auras then
 			return
 		end
-		if f.trivial and not self.db.profile.showtrivial then
+		if (f.trivial and not self.db.profile.showtrivial) or f.friend then
 			return
 		end
 
@@ -584,16 +584,10 @@ mod.configChangedListener = function(self)
 	end
 end
 
-mod:AddConfigChanged(
-	"enabled",
-	function(v)
-		mod:Toggle(v)
-	end
-)
-
+mod:AddConfigChanged("enabled", function(v) mod:Toggle(v) end)
 mod:AddConfigChanged("icons", UpdateSizes, UpdateAllButtons)
-
 mod:AddGlobalConfigChanged("addon", {{"general", "width"}, {"general", "twidth"}}, UpdateSizes, UpdateAllButtons)
+
 ---------------------------------------------------- initialisation functions --
 function mod:GetOptions()
 	return {
@@ -747,33 +741,29 @@ function mod:GetOptions()
 	}
 end
 function mod:OnInitialize()
-	self.db =
-		addon.db:RegisterNamespace(
-		self.moduleName,
-		{
-			profile = {
-				enabled = true,
-				showtrivial = false,
-				behav = {
-					useWhitelist = true,
-					showSecondary = true
-				},
-				display = {
-					pulsate = true,
-					decimal = true,
-					sort = false,
-					timerThreshold = 60,
-					lengthMin = 0,
-					lengthMax = -1
-				},
-				icons = {
-					icon_size = 25,
-					trivial_icon_size = 20,
-					squareness = .7
-				}
+	self.db = addon.db:RegisterNamespace(self.moduleName, {
+		profile = {
+			enabled = true,
+			showtrivial = false,
+			behav = {
+				useWhitelist = true,
+				showSecondary = true
+			},
+			display = {
+				pulsate = true,
+				decimal = true,
+				sort = false,
+				timerThreshold = 60,
+				lengthMin = 0,
+				lengthMax = -1
+			},
+			icons = {
+				icon_size = 25,
+				trivial_icon_size = 20,
+				squareness = .7
 			}
 		}
-	)
+	})
 
 	addon:InitModuleOptions(self)
 	mod:SetEnabledState(self.db.profile.enabled)
