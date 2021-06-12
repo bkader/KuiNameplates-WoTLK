@@ -535,11 +535,11 @@ function mod:UNIT_AURA(event, unit, frame)
 		return
 	end
 
-	local filter = "PLAYER "
+	local filter = "PLAYER"
 	if UnitIsFriend(unit, "player") then
-		filter = filter .. "HELPFUL"
+		filter = filter .. "|HELPFUL"
 	else
-		filter = filter .. "HARMFUL"
+		filter = filter .. "|HARMFUL"
 	end
 
 	for i = 1, 40 do
