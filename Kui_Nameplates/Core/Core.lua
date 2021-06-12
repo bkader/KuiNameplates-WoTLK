@@ -104,7 +104,7 @@ local defaults = {
 			levelanchorpoint = "BOTTOMLEFT",
 			leveloffsetx = 0,
 			leveloffsety = 2.5,
-			levelanchorpoint = "BOTTOMRIGHT",
+			healthanchorpoint = "BOTTOMRIGHT",
 			healthoffsetx = 0,
 			healthoffsety = 2.5
 		},

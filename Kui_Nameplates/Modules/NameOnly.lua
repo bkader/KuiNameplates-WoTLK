@@ -58,7 +58,6 @@ local function SwitchOn(f)
 
 	f.name:SetParent(f)
 	f.name:SetJustifyH("CENTER")
-	f.name:SetJustifyV("CENTER")
 
 	UpdateDisplay(f)
 

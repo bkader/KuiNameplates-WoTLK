@@ -349,6 +349,11 @@ local function OnFrameUpdate(self, e)
 	if f.DoShow then
 		f:Show()
 		f.DoShow = nil
+
+		-- correct few positions
+		addon:UpdateHealthText(f, trivial)
+		addon:UpdateLevel(f, trivial)
+		addon:UpdateName(f, trivial)
 	end
 	------------------------------------------------------------------- Alpha --
 	f.defaultAlpha = self:GetAlpha()

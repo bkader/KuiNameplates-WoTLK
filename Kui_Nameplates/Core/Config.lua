@@ -1106,7 +1106,7 @@ do
 		{"text", "nametext", "nameoffsety"},
 		function(val)
 			addon.db.profile.text.nameoffsety = val
-			addon.sizes.tex.nameOffsetX = addon.db.profile.text.nameoffsetx
+			addon.sizes.tex.nameOffsetY = addon.db.profile.text.nameoffsety
 		end,
 		function(f)
 			addon:UpdateName(f, f.trivial)
@@ -1137,7 +1137,7 @@ do
 		{"text", "leveltext", "leveloffsety"},
 		function(val)
 			addon.db.profile.text.leveloffsety = val
-			addon.sizes.tex.levelOffsetX = addon.db.profile.text.leveloffsetx
+			addon.sizes.tex.levelOffsetY = addon.db.profile.text.leveloffsety
 		end,
 		function(f)
 			addon:UpdateLevel(f, f.trivial)
@@ -1168,7 +1168,7 @@ do
 		{"text", "healthtext", "healthoffsety"},
 		function(val)
 			addon.db.profile.text.healthoffsety = val
-			addon.sizes.tex.healthOffsetX = addon.db.profile.text.healthoffsetx
+			addon.sizes.tex.healthOffsetY = addon.db.profile.text.healthoffsety
 		end,
 		function(f)
 			addon:UpdateHealthText(f, f.trivial)

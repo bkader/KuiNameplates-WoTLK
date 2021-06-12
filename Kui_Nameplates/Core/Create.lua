@@ -153,7 +153,7 @@ function addon:UpdateHealthText(f, trivial)
 			f.health.p:Show()
 		end
 
-		local anch2, anch1 = self.db.profile.text.healthanchorpoint or "BOTTOMRIGHT"
+		local anch2, anch1 = self.db.profile.text.healthanchorpoint or "BOTTOMRIGHT", ""
 
 		if anch2:find("BOTTOM") then
 			anch1 = "TOP"
@@ -162,7 +162,6 @@ function addon:UpdateHealthText(f, trivial)
 			anch1 = "BOTTOM"
 			f.health.p:SetJustifyV("TOP")
 		else
-			anch1 = ""
 			f.health.p:SetJustifyV("MIDDLE")
 		end
 
@@ -207,7 +206,7 @@ function addon:UpdateLevel(f, trivial)
 	if trivial then
 		f.level:Hide()
 	else
-		local anch2, anch1 = self.db.profile.text.levelanchorpoint or "BOTTOMLEFT"
+		local anch2, anch1 = self.db.profile.text.levelanchorpoint or "BOTTOMLEFT", ""
 
 		if anch2:find("BOTTOM") then
 			f.level:SetJustifyV("BOTTOM")
@@ -216,7 +215,6 @@ function addon:UpdateLevel(f, trivial)
 			f.level:SetJustifyV("TOP")
 			anch1 = "BOTTOM"
 		else
-			anch1 = ""
 			f.level:SetJustifyV("MIDDLE")
 		end
 
@@ -247,7 +245,7 @@ function addon:UpdateName(f, trivial)
 	f.name:ClearAllPoints()
 	f.name:SetWidth(0)
 
-	local anch2, anch1 = self.db.profile.text.nameanchorpoint or "TOP"
+	local anch2, anch1 = self.db.profile.text.nameanchorpoint or "TOP", ""
 	if anch2 == "BOTTOM" then
 		anch1 = "TOP"
 		f.name:SetJustifyV("TOP")
