@@ -426,7 +426,6 @@ end
 local function PairsBySpellName(whitelist)
 	local name_list = {}
 
-	local spellid, ignored
 	for spellid, ignored in pairs(whitelist) do
 		local name = GetSpellInfo(spellid)
 		tinsert(name_list, {name or tostring(spellid), spellid, ignored})
@@ -554,8 +553,8 @@ f:RegisterEvent("ADDON_LOADED")
 InterfaceOptions_AddCategory(opt)
 
 --------------------------------------------------------------- slash command --
-SLASH_KUISPELLLIST1 = "/kuislc"
-SLASH_KUISPELLLIST2 = "/kslc"
+_G.SLASH_KUISPELLLIST1 = "/kuislc"
+_G.SLASH_KUISPELLLIST2 = "/kslc"
 
 function SlashCmdList.KUISPELLLIST(msg)
 	if msg == "dump" then

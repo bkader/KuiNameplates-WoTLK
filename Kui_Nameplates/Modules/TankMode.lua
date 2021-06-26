@@ -8,7 +8,7 @@ local addon = LibStub("AceAddon-3.0"):GetAddon("KuiNameplates")
 local mod = addon:NewModule("TankMode", addon.Prototype, "AceEvent-3.0")
 local L = LibStub("AceLocale-3.0"):GetLocale("KuiNameplates")
 
-local class, tankmode
+local class, tankmode = select(2, UnitClass("player")), nil
 
 local profile_tankmode
 
@@ -105,8 +105,6 @@ do
 end
 --------------------------------------------------------- tank mode functions --
 do
-	local class = select(2, UnitClass("player"))
-
 	local function getTalentpointsSpent(spellID)
 		local spellName = GetSpellInfo(spellID)
 		for tabIndex = 1, GetNumTalentTabs() do

@@ -69,11 +69,11 @@ local function SetHealthColour(self, sticky, r, g, b)
 	end
 
 	-- update health colour from default (r,g,b arguments are ignored)
-	local r, g, b = self.oldHealth:GetStatusBarColor()
+	r, g, b = self.oldHealth:GetStatusBarColor()
 	if self.health.reset or r ~= self.health.r or g ~= self.health.g or b ~= self.health.b then
 		-- store the default colour
 		self.health.r, self.health.g, self.health.b = r, g, b
-		self.health.reset, self.player, self.tapped = nil, nil, nil, nil
+		self.health.reset, self.player, self.tapped = nil, nil, nil
 
 		if g > 0.9 and r == 0 and b == 0 then
 			-- friendly NPC
@@ -351,9 +351,9 @@ local function OnFrameUpdate(self, e)
 		f.DoShow = nil
 
 		-- correct few positions
-		addon:UpdateHealthText(f, trivial)
-		addon:UpdateLevel(f, trivial)
-		addon:UpdateName(f, trivial)
+		addon:UpdateHealthText(f, f.trivial)
+		addon:UpdateLevel(f, f.trivial)
+		addon:UpdateName(f, f.trivial)
 	end
 	------------------------------------------------------------------- Alpha --
 	f.defaultAlpha = self:GetAlpha()
@@ -606,7 +606,6 @@ function addon:InitFrame(frame)
 	f.UpdateFrameCritical = UpdateFrameCritical
 	f.SetName = SetName
 	f.SetHealthColour = SetHealthColour
-	f.SetNameColour = SetNameColour
 	f.SetGlowColour = SetGlowColour
 	f.SetCentre = SetFrameCentre
 	f.OnHealthValueChanged = OnHealthValueChanged

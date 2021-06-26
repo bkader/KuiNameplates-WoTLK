@@ -788,7 +788,6 @@ function mod:OnEnable()
 	-- get guid immediately if enabled while in game
 	self:PLAYER_ENTERING_WORLD()
 
-	local _, frame
 	for _, frame in pairs(addon.frameList) do
 		if not frame.auras then
 			self:Create(nil, frame.kui)
@@ -805,7 +804,6 @@ function mod:OnDisable()
 	self:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 
-	local _, frame
 	for _, frame in pairs(addon.frameList) do
 		self:Hide(nil, frame.kui)
 	end

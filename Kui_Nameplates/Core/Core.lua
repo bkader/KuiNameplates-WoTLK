@@ -323,17 +323,16 @@ do
 		return t, stop, start
 	end
 
-	local unit_prefix, max_members
 	function addon:GroupUpdate()
 		group_update = nil
 
-		local unit_prefix, max_members, min_members = GetGroupTypeAndCount()
+		local t, stop, start = GetGroupTypeAndCount()
 		if not t then
 			return
 		end
 
-		for i = min_members, max_members do
-			StoreUnit(unit_prefix .. i)
+		for i = start, stop do
+			StoreUnit(t .. i)
 		end
 	end
 end
@@ -344,9 +343,7 @@ end
 ------------------------------------------------------------ helper functions --
 -- cycle all frames' fontstrings and reset the font
 function addon:UpdateAllFonts()
-	local _, frame
 	for _, frame in pairs(addon.frameList) do
-		local _, fs
 		for _, fs in pairs(frame.kui.fontObjects) do
 			local _, size, flags = fs:GetFont()
 			fs:SetFont(addon.font, size, flags)
@@ -356,7 +353,7 @@ end
 
 -- given to fontstrings created with frame:CreateFontString (below)
 local function SetFontSize(fs, size)
-	size = addon.db.profile.fonts.options.onesize and "name" or fs.osize or fs.size
+	size = size or (addon.db.profile.fonts.options.onesize and "name" or fs.osize or fs.size)
 
 	if type(size) == "string" and fs.size and addon.sizes.font[size] then
 		-- if fontsize is a key of the font sizes table, store it so that
@@ -418,7 +415,6 @@ function addon:ScaleFontSize(key)
 end
 -- the same, for all registered sizes
 function addon:ScaleFontSizes()
-	local key, _
 	for key, _ in pairs(self.defaultFontSizes) do
 		self:ScaleFontSize(key)
 	end
@@ -473,7 +469,7 @@ do
 		-- find new nameplates
 		local frames = select("#", WorldFrame:GetChildren())
 		if frames ~= self.numFrames then
-			local i, f
+			local f
 			for i = 1, frames do
 				f = select(i, WorldFrame:GetChildren())
 				if self:IsNameplate(f) and not f.kui then

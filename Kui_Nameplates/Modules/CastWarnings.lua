@@ -214,7 +214,6 @@ function mod:OnEnable()
 
 	self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 
-	local _, frame
 	for _, frame in pairs(addon.frameList) do
 		if not frame.castWarning then
 			self:CreateCastWarnings(nil, frame.kui)
@@ -225,7 +224,6 @@ end
 function mod:OnDisable()
 	self:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 
-	local _, frame
 	for _, frame in pairs(addon.frameList) do
 		self:Hide(nil, frame.kui)
 	end

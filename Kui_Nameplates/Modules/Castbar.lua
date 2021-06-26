@@ -416,7 +416,6 @@ function mod:OnInitialize()
 	SetCVars()
 end
 function mod:OnEnable()
-	local _, frame
 	for _, frame in pairs(addon.frameList) do
 		if not frame.kui or not frame.kui.castbar then
 			self:CreateCastbar(frame.kui)
@@ -424,7 +423,6 @@ function mod:OnEnable()
 	end
 end
 function mod:OnDisable()
-	local _, frame
 	for _, frame in pairs(addon.frameList) do
 		self:HideCastbar(frame.kui)
 	end

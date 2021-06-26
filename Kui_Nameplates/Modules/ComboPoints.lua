@@ -36,7 +36,6 @@ local function ComboPointsUpdate(self)
 			self.glowColour = colours.glowPartial
 		end
 
-		local i
 		for i = 1, 5 do
 			if i <= self.points then
 				self[i]:SetAlpha(1)
@@ -64,15 +63,11 @@ function mod:UNIT_COMBO_POINTS(event, unit)
 
 	if f and f.combopoints then
 		local points = GetComboPoints("player", "target")
-		local stacks
-
-		f.combopoints.stacks = stacks
 		f.combopoints.points = points
 		f.combopoints:Update()
 
 		if points > 0 then
 			-- clear points on other frames
-			local _, frame
 			for _, frame in pairs(addon.frameList) do
 				if frame.kui.combopoints and frame.kui ~= f then
 					self:HideComboPoints(nil, frame.kui)
@@ -94,7 +89,7 @@ function mod:CreateComboPoints(msg, frame)
 	frame.combopoints.glows = {}
 	frame.combopoints:Hide()
 
-	local i, pcp
+	local pcp
 	for i = 0, 4 do
 		-- create individual combo point icons
 		-- size and position of first icon is set in ScaleComboPoints
@@ -124,7 +119,6 @@ function mod:CreateComboPoints(msg, frame)
 end
 -- update/set frame sizes ------------------------------------------------------
 function mod:ScaleComboPoints(frame)
-	local i, cp
 	for i, cp in ipairs(frame.combopoints) do
 		cp:SetSize(sizes.combopoints, sizes.combopoints)
 
@@ -193,7 +187,6 @@ function mod:OnEnable()
 
 	self:RegisterEvent("UNIT_COMBO_POINTS")
 
-	local _, frame
 	for _, frame in pairs(addon.frameList) do
 		if not frame.combopoints then
 			self:CreateComboPoints(nil, frame.kui)
@@ -204,7 +197,6 @@ end
 function mod:OnDisable()
 	self:UnregisterEvent("UNIT_COMBO_POINTS")
 
-	local _, frame
 	for _, frame in pairs(addon.frameList) do
 		self:HideComboPoints(nil, frame.kui)
 	end

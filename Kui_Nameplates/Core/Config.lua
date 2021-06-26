@@ -66,10 +66,9 @@ do
 			mod:configChangedListener()
 		end
 
-		if mod.configChangedFuncs then
-			-- legacy support
-			local key = info[#info]
+		local key = info[#info]
 
+		if mod.configChangedFuncs then
 			if mod.configChangedFuncs.NEW then
 				-- new ConfigChanged support (TODO: voyeurs)
 				local cc_table, gcc_table, k
@@ -1000,8 +999,8 @@ StaticPopupDialogs.KUINAMEPLATES_GITHUB = {
 	hideOnEscape = 1
 }
 --------------------------------------------------------------- Slash command --
-SLASH_KUINAMEPLATES1 = "/kuinameplates"
-SLASH_KUINAMEPLATES2 = "/knp"
+_G.SLASH_KUINAMEPLATES1 = "/kuinameplates"
+_G.SLASH_KUINAMEPLATES2 = "/knp"
 
 function SlashCmdList.KUINAMEPLATES()
 	addon:OpenConfig()
@@ -1018,7 +1017,6 @@ end
 do
 	-- cycle all frames and reset the health and castbar status bar textures
 	local function UpdateAllBars()
-		local _, frame
 		for _, frame in pairs(addon.frameList) do
 			if frame.kui.health then
 				frame.kui.health:SetStatusBarTexture(addon.bartexture)
