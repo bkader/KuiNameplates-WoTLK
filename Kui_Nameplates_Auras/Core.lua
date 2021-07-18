@@ -547,6 +547,8 @@ function mod:UNIT_AURA(event, unit, frame)
 
 		if spellid then
 			frame.auras:DisplayAura(spellid, name, icon, count, duration, expirationTime)
+		else
+			break -- nothing found
 		end
 	end
 
