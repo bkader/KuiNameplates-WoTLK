@@ -220,11 +220,11 @@ end
 local function OnFrameLeave(self)
 	self.highlighted = nil
 
-	if self.highlight and (profile.general.highlight_target and not self.target or not profile.general.highlight_target) then
+	if self.highlight and profile.general and (profile.general.highlight_target and not self.target or not profile.general.highlight_target) then
 		self.highlight:Hide()
 	end
 
-	if profile_hp.text.mouseover and not self.target then
+	if profile_hp.text and profile_hp.text.mouseover and not self.target then
 		self.health.p:Hide()
 	end
 end
