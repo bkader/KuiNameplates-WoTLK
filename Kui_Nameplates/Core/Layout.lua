@@ -193,9 +193,9 @@ do
 			end
 		end
 	end
-	OnHealthValueChanged = function(frame)
+	OnHealthValueChanged = function(frame, curval)
 		frame.health.min, frame.health.max = frame.oldHealth:GetMinMaxValues()
-		frame.health.curr = frame.oldHealth:GetValue()
+		frame.health.curr = curval or frame.oldHealth:GetValue()
 		frame.health.percent = 100 * frame.health.curr / frame.health.max
 
 		frame.health:SetMinMaxValues(frame.health.min, frame.health.max)
@@ -665,7 +665,7 @@ function addon:InitFrame(frame)
 	frame:HookScript("OnUpdate", OnFrameUpdate)
 
 	f.oldHealth.kuiParent = frame
-	f.oldHealth:HookScript("OnValueChanged", function() f:OnHealthValueChanged() end)
+	f.oldHealth:HookScript("OnValueChanged", function(self, ...) f:OnHealthValueChanged(...) end)
 	------------------------------------------------------------ Finishing up --
 	addon:SendMessage("KuiNameplates_PostCreate", f)
 

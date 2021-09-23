@@ -303,5 +303,9 @@ function addon:UpdateRaidIcon(f)
 	f.icon:SetSize(addon.sizes.tex.raidicon, addon.sizes.tex.raidicon)
 
 	f.icon:ClearAllPoints()
-	PositionRaidIcon[addon.db.profile.general.raidicon_side](f)
+	if PositionRaidIcon[addon.db.profile.general.raidicon_side] then
+		PositionRaidIcon[addon.db.profile.general.raidicon_side](f)
+	else
+		PositionRaidIcon[3](f)
+	end
 end
