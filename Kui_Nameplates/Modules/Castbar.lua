@@ -148,9 +148,13 @@ local function OnDefaultCastbarUpdate(self, elapsed)
 
 	f.castbar:Show()
 end
-local function OnDefaultCastbarEvent(self, event, ...)
+local function OnDefaultCastbarEvent(self, event, unit, spellName, spellRank)
 	if event == "UNIT_SPELLCAST_START" or event == "UNIT_SPELLCAST_CHANNEL_START" then
-		self.spellName = select(2, ...)
+		local frame = addon:GetUnitPlate(unit)
+		if not frame or not frame.castbar then
+			return
+		end
+		frame.castbar.spellName = spellName
 	end
 end
 ---------------------------------------------------------------------- create --
