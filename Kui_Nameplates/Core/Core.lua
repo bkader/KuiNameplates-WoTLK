@@ -302,7 +302,7 @@ do
 	function addon:PLAYER_TARGET_CHANGED(event)
 		StoreUnit("target")
 		if UnitExists("targettarget") then
-			StoreUnit("mouseovertarget")
+			StoreUnit("targettarget")
 		end
 	end
 	function addon:PLAYER_FOCUS_CHANGED(event)
