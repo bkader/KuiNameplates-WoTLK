@@ -9,6 +9,7 @@
 ## X-Curse-Project-ID: kuinameplates
 ## X-Website: https://github.com/bkader/KuiNameplates-WoTLK
 ## X-Email: bkader@email.com
+## X-Date: 2021-11-30 @ 02:21 PM |cff808080UTC|r
 
 Embeds.xml
 Locales.xml

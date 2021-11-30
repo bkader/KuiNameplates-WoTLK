@@ -12,6 +12,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("KuiNameplates")
 ------------------------------------------------------------------ Ace config --
 local AceConfig = LibStub("AceConfig-3.0")
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
+local LDS = LibStub("LibDualSpec-1.0", true)
 
 local RELOAD_HINT = L["\n|cffff0000UI reload required to take effect."]
 --------------------------------------------------------------- Options table --
@@ -965,8 +966,12 @@ do
 	end
 
 	function addon:FinalizeOptions()
-		options.args["profiles"] = LibStub("AceDBOptions-3.0"):GetOptionsTable(self.db)
+		if LDS then LDS:EnhanceDatabase(self.db, "kuinameplates") end
+
+		options.args.profiles = LibStub("AceDBOptions-3.0"):GetOptionsTable(self.db)
 		options.args.profiles.order = -1
+
+		if LDS then LDS:EnhanceOptions(options.args.profiles, self.db) end
 
 		AceConfig:RegisterOptionsTable("kuinameplates", options)
 		AceConfigDialog:AddToBlizOptions("kuinameplates", category)
