@@ -178,8 +178,9 @@ mod:AddConfigChanged("enabled", function(v) mod:Toggle(v) end)
 mod:AddConfigChanged({"display", "ondamaged"}, nil, function(f)
 	if not mod.db.profile.enabled then
 		return
+	elseif mod.configChangedFuncs.enabled.pf then
+		mod.configChangedFuncs.enabled.pf(f, true)
 	end
-	mod.configChangedFuncs.enabled.pf(f, true)
 end)
 mod:AddConfigChanged(
 	{
